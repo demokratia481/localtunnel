@@ -10,10 +10,23 @@ const localtunnel = require('./localtunnel');
 
 let fakePort;
 
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, function(match) {
+    const escape = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    };
+    return escape[match];
+  });
+}
+
 before(done => {
   const server = http.createServer();
   server.on('request', (req, res) => {
-    res.write(req.headers.host);
+    res.write(escapeHtml(req.headers.host));
     res.end();
   });
   server.listen(() => {
