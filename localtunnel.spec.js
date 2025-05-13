@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
 const crypto = require('crypto');
-const http = require('http');
 const https = require('https');
 const url = require('url');
 const assert = require('assert');
@@ -24,7 +23,7 @@ function escapeHtml(str) {
 }
 
 before(done => {
-  const server = http.createServer();
+  const server = https.createServer();
   server.on('request', (req, res) => {
     res.write(escapeHtml(req.headers.host));
     res.end();
